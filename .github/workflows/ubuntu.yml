@@ -1,0 +1,39 @@
+---
+name: Publish ubuntu-python Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [ ubuntu ]
+        version:
+          - "18.04"
+          - "bionic"
+          - "20.04"
+          - "jammy"
+          - "22.04"
+          - "focal"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Login to DockerHub
+        run: docker login -u  ${{ secrets.DOCKER_USERNAME }} -p  ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build Image
+        run: |
+          cd basic &&
+          docker build . \
+              --tag antonmircea/${{ matrix.image }}-python:${{ matrix.version }} \
+              --build-arg image=${{ matrix.image }} \
+              --build-arg version=${{ matrix.version }}
+
+      - name: Publish Image
+        run: docker push antonmircea/${{ matrix.image }}-python:${{ matrix.version }}
