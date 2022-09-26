@@ -9,6 +9,3 @@ RUN apk add --no-cache python3
 
 # Install utilities for testing purposes
 RUN apk add --no-cache curl
-
-# Initialize single-node swarm
-ENTRYPOINT docker swarm init

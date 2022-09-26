@@ -1,5 +1,5 @@
 ---
-name: Publish dsind-python Images
+name: Publish dind-python Images
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     - cron: '0 22 * * 0'
 
 jobs:
-  dsind:
+  dind:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,8 +20,8 @@ jobs:
 
       - name: Build Image
         run: |
-          cd dsind &&
-          docker build . --tag antonmircea/dsind-python:latest
+          cd dind &&
+          docker build . --tag antonmircea/dind-python:latest
 
       - name: Publish Image
-        run: docker push antonmircea/dsind-python:latest
+        run: docker push antonmircea/dind-python:latest
