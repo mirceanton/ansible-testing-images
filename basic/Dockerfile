@@ -3,7 +3,8 @@ ARG version
 FROM $image:$version
 
 # Update package cache and install prerequisites
-RUN apt update && apt install -y --no-install-recommends sudo python3 locales
+RUN apt update && apt upgrade -y
+RUN apt install -y --no-install-recommends sudo python3 locales
 RUN apt clean && apt autoremove
 
 # Generate locale
