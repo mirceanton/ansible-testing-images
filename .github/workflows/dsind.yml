@@ -1,0 +1,25 @@
+---
+name: Publish dsind-python Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dsind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Login to DockerHub
+        run: docker login -u  ${{ secrets.DOCKER_USERNAME }} -p  ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build Image
+        run: |
+          cd dsind &&
+          docker build . --tag antonmircea/dsind-python:latest
+
+      - name: Publish Image
+        run: docker push antonmircea/dsind-python:latest
